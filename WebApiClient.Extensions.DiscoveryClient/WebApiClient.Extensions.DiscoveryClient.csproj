@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.2.0</Version>
+    <Description>WebApiClient.JIT的DiscoveryClient扩展</Description>
+    <PackageReleaseNotes>WebApiClient.JIT的DiscoveryClient扩展</PackageReleaseNotes>
+    <Copyright>Copyright © xljiulang 2018</Copyright>
+    <PackageProjectUrl>https://github.com/xljiulang/WebApiClient.Extensions</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/dotnetcore/WebApiClient/master/icon.png</PackageIconUrl>
+    <Authors>xljiulang</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>    
+    <PackageReference Include="Steeltoe.Discovery.ClientCore" Version="2.0.0" />     
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebApiClient.Extensions.HttpClientFactory\WebApiClient.Extensions.HttpClientFactory.csproj" />
+  </ItemGroup>
+
+</Project>
