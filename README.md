@@ -29,7 +29,7 @@ public interface INetApi : IHttpApi
 // This method gets called by the runtime. Use this method to add services to the container.
 public void ConfigureServices(IServiceCollection services)
 {
-    services.AddHttpApi<INetApi>().ConfigureHttpApiConfig((p, c) =>
+    services.AddHttpApi<INetApi>().ConfigureHttpApiConfig((c,p) =>
     {
         c.HttpHost = new Uri("http://localhost:9999/");
         c.FormatOptions.DateTimeFormat = "yyyy-MM-dd HH:mm:ss.fff";
