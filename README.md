@@ -29,7 +29,12 @@ public interface INetApi : IHttpApi
 // This method gets called by the runtime. Use this method to add services to the container.
 public void ConfigureServices(IServiceCollection services)
 {
-    services.AddHttpApi<INetApi>();
+    services.AddHttpApi<INetApi>().ConfigureHttpApiConfig((p, c) =>
+    {
+        c.HttpHost = new Uri("http://localhost:9999/");
+        c.FormatOptions.DateTimeFormat = "yyyy-MM-dd HH:mm:ss.fff";
+        c.LoggerFactory = p.GetRequiredService<ILoggerFactory>();
+    });
     ...
 }
 ```
@@ -74,8 +79,13 @@ public interface INetApi : IHttpApi
 ```c#
 // This method gets called by the runtime. Use this method to add services to the container.
 public void ConfigureServices(IServiceCollection services)
-{
-    services.AddHttpApiTypedClient<INetApi>();
+{   
+    services.AddHttpApiTypedClient<INetApi>((c, p) =>
+    {
+        c.HttpHost = new Uri("http://localhost:9999/");
+        c.FormatOptions.DateTimeFormat = "yyyy-MM-dd HH:mm:ss.fff";
+        c.LoggerFactory = p.GetRequiredService<ILoggerFactory>();
+    });
     ...
 }
 ```
@@ -121,7 +131,11 @@ public interface INetApi : IHttpApi
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddDiscoveryClient(Configuration);
-    services.AddDiscoveryTypedClient<INetApi>();
+    services.AddDiscoveryTypedClient<INetApi>((c, p) =>
+    {        
+        c.FormatOptions.DateTimeFormat = "yyyy-MM-dd HH:mm:ss.fff";
+        c.LoggerFactory = p.GetRequiredService<ILoggerFactory>();
+    });;
     ...
 }
 
