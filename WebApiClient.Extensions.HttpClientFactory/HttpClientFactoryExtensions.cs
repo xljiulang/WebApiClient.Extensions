@@ -17,7 +17,7 @@ namespace WebApiClient.Extensions.HttpClientFactory
         public static IHttpClientBuilder AddHttpApiTypedClient<TInterface>(this IServiceCollection services)
             where TInterface : class, IHttpApi
         {
-            return services.AddHttpApiTypedClient<TInterface>(default(Action<HttpApiConfig, IServiceProvider>));
+            return services.AddHttpApiTypedClient<TInterface>(c => { });
         }
 
         /// <summary>
@@ -26,11 +26,17 @@ namespace WebApiClient.Extensions.HttpClientFactory
         /// <typeparam name="TInterface">接口类型</typeparam>
         /// <param name="services"></param>
         /// <param name="config">http接口的配置</param>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
         public static IHttpClientBuilder AddHttpApiTypedClient<TInterface>(this IServiceCollection services, Action<HttpApiConfig> config)
             where TInterface : class, IHttpApi
         {
-            return services.AddHttpApiTypedClient<TInterface>((c, p) => config?.Invoke(c));
+            if (config == null)
+            {
+                throw new ArgumentNullException(nameof(config));
+            }
+
+            return services.AddHttpApiTypedClient<TInterface>((c, p) => config.Invoke(c));
         }
 
         /// <summary>
@@ -39,16 +45,22 @@ namespace WebApiClient.Extensions.HttpClientFactory
         /// <typeparam name="TInterface">接口类型</typeparam>
         /// <param name="services"></param>
         /// <param name="config">http接口的配置</param>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
         public static IHttpClientBuilder AddHttpApiTypedClient<TInterface>(this IServiceCollection services, Action<HttpApiConfig, IServiceProvider> config)
             where TInterface : class, IHttpApi
         {
+            if (config == null)
+            {
+                throw new ArgumentNullException(nameof(config));
+            }
+
             return services
                 .AddHttpClient<TInterface>()
                 .AddTypedClient((httpClient, provider) =>
                 {
                     var httpApiConfig = new HttpApiConfig(httpClient);
-                    config?.Invoke(httpApiConfig, provider);
+                    config.Invoke(httpApiConfig, provider);
                     return HttpApiClient.Create<TInterface>(httpApiConfig);
                 });
         }

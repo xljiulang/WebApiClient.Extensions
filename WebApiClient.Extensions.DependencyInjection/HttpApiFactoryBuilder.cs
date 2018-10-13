@@ -10,7 +10,7 @@ namespace WebApiClient.Extensions.DependencyInjection
     /// <typeparam name="TInterface"></typeparam>
     public class HttpApiFactoryBuilder<TInterface> where TInterface : class, IHttpApi
     {
-        private Action<IServiceProvider, HttpApiConfig> configAction;
+        private Action<HttpApiConfig, IServiceProvider> configAction;
 
         private Func<IServiceProvider, HttpMessageHandler> handlerFunc;
 
@@ -29,7 +29,7 @@ namespace WebApiClient.Extensions.DependencyInjection
             services.AddSingleton<IHttpApiFactory<TInterface>, HttpApiFactory<TInterface>>(p =>
             {
                 return new HttpApiFactory<TInterface>()
-                .ConfigureHttpApiConfig(c => this.configAction?.Invoke(p, c))
+                .ConfigureHttpApiConfig(c => this.configAction?.Invoke(c, p))
                 .ConfigureHttpMessageHandler(() => this.handlerFunc?.Invoke(p))
                 .SetLifetime(this.lifeTime)
                 .SetCleanupInterval(this.cleanupInterval)
@@ -47,10 +47,27 @@ namespace WebApiClient.Extensions.DependencyInjection
         /// 配置HttpApiConfig
         /// </summary>
         /// <param name="configAction">配置委托</param>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
-        public HttpApiFactoryBuilder<TInterface> ConfigureHttpApiConfig(Action<IServiceProvider, HttpApiConfig> configAction)
+        public HttpApiFactoryBuilder<TInterface> ConfigureHttpApiConfig(Action<HttpApiConfig> configAction)
         {
-            this.configAction = configAction;
+            if (configAction == null)
+            {
+                throw new ArgumentNullException(nameof(configAction));
+            }
+            return this.ConfigureHttpApiConfig((c, p) => configAction.Invoke(c));
+        }
+
+
+        /// <summary>
+        /// 配置HttpApiConfig
+        /// </summary>
+        /// <param name="configAction">配置委托</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <returns></returns>
+        public HttpApiFactoryBuilder<TInterface> ConfigureHttpApiConfig(Action<HttpApiConfig, IServiceProvider> configAction)
+        {
+            this.configAction = configAction ?? throw new ArgumentNullException(nameof(configAction));
             return this;
         }
 
@@ -58,10 +75,26 @@ namespace WebApiClient.Extensions.DependencyInjection
         /// 配置HttpMessageHandler的创建
         /// </summary>
         /// <param name="handlerFunc">创建委托</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <returns></returns>
+        public HttpApiFactoryBuilder<TInterface> ConfigureHttpMessageHandler(Func<HttpMessageHandler> handlerFunc)
+        {
+            if (handlerFunc == null)
+            {
+                throw new ArgumentNullException(nameof(handlerFunc));
+            }
+            return this.ConfigureHttpMessageHandler(p => handlerFunc.Invoke());
+        }
+
+        /// <summary>
+        /// 配置HttpMessageHandler的创建
+        /// </summary>
+        /// <param name="handlerFunc">创建委托</param>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
         public HttpApiFactoryBuilder<TInterface> ConfigureHttpMessageHandler(Func<IServiceProvider, HttpMessageHandler> handlerFunc)
         {
-            this.handlerFunc = handlerFunc;
+            this.handlerFunc = handlerFunc ?? throw new ArgumentNullException(nameof(handlerFunc));
             return this;
         }
 
