@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.2.5</Version>
+    <Copyright>Copyright © xljiulang 2018</Copyright>
+    <PackageReleaseNotes>WebApiClient.JIT的MessagePack扩展</PackageReleaseNotes>
+    <Description>WebApiClient.JIT的MessagePack扩展</Description>
+    <Authors>xljiulang</Authors>
+    <PackageProjectUrl>https://github.com/xljiulang/WebApiClient.Extensions</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/dotnetcore/WebApiClient/master/icon.png</PackageIconUrl>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MessagePack" Version="1.7.3.4" />
+    <PackageReference Include="WebApiClient.JIT" Version="0.2.5" />
+  </ItemGroup>
+
+</Project>
