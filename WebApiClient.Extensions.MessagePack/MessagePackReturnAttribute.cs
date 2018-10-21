@@ -10,7 +10,7 @@ namespace WebApiClient.Attributes
     /// <summary>
     /// 表示使用MessagePack反序列化回复内容作为返回值
     /// </summary>
-    public class MessagePackReturnAttribute : JsonReturnAttribute
+    public class MessagePackReturnAttribute : ApiReturnAttribute
     {
         /// <summary>
         /// 格式化解析实例
