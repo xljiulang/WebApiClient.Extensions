@@ -174,10 +174,10 @@ PM> `install-package WebApiClient.Extensions.MessagePack `
 ```c#
 [HttpHost("https:/localhost:5000")]
 [MessagePackReturn]
-public interface INetApi : IHttpApi
+public interface IUsersApi : IHttpApi
 {
-    [HttpGet("api/values/{id}")]
-    ITask<string> GetValuesAsync(int id);
+    [HttpGet("api/users/{id}")]
+    ITask<UserInfo> GetValuesAsync(int id);
     
     [HttpPut("api/users")]
     ITask<bool> PutAsync([MessagePack] UserInfo value);
