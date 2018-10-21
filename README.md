@@ -180,7 +180,7 @@ public interface IUsersApi : IHttpApi
     ITask<UserInfo> GetAsync(int id);
     
     [HttpPut("api/users")]
-    ITask<bool> PutAsync([MessagePack] UserInfo value);
+    ITask<bool> PutAsync([MessagePackContent] UserInfo value);
 }
 ```
 
