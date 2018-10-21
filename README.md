@@ -1,5 +1,5 @@
 # WebApiClient.Extensions
-[WebApiClient](https://github.com/dotnetcore/WebApiClient)项目的第三方扩展：[DependencyInjection](https://github.com/aspnet/DependencyInjection)、[HttpClientFactory](https://github.com/aspnet/HttpClientFactory)、[SteeltoeOSS.Discovery](https://github.com/SteeltoeOSS/Discovery)
+[WebApiClient](https://github.com/dotnetcore/WebApiClient)项目的第三方扩展：[DependencyInjection](https://github.com/aspnet/DependencyInjection)、[HttpClientFactory](https://github.com/aspnet/HttpClientFactory)、[SteeltoeOSS.Discovery](https://github.com/SteeltoeOSS/Discovery)、[MessagePack](https://github.com/neuecc/MessagePack-CSharp)
 
 
 ### 1 DependencyInjection扩展
@@ -135,7 +135,7 @@ public void ConfigureServices(IServiceCollection services)
     {        
         c.FormatOptions.DateTimeFormat = "yyyy-MM-dd HH:mm:ss.fff";
         c.LoggerFactory = p.GetRequiredService<ILoggerFactory>();
-    });;
+    });
     ...
 }
 
@@ -161,3 +161,41 @@ public class HomeController : Controller
     }
 }
 ```
+ 
+### 4 MessagePack扩展
+
+#### 4.1 Nuget
+PM> `install-package WebApiClient.Extensions.MessagePack `
+<br/>支持 netstandard1.6 / net4.5 
+
+#### 4.2 使用方法
+> 声明远程http服务的的WebApiClient调用接口
+
+```c#
+[HttpHost("https:/localhost:5000")]
+[MessagePackReturn]
+public interface INetApi : IHttpApi
+{
+    [HttpGet("api/values/{id}")]
+    ITask<string> GetValuesAsync(int id);
+    
+    [HttpPut("api/users")]
+    ITask<bool> PutAsync([MessagePack] UserInfo value);
+}
+```
+
+> `asp.net core`服务端MessagePack相关配置
+
+```c#
+// This method gets called by the runtime. Use this method to add services to the container.
+public void ConfigureServices(IServiceCollection services)
+{
+    ...
+    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddMvcOptions(o =>
+    {
+        o.OutputFormatters.Add(new MessagePackOutputFormatter(ContractlessStandardResolver.Instance));
+        o.InputFormatters.Add(new MessagePackInputFormatter(ContractlessStandardResolver.Instance));
+    });
+}
+```
+ 
