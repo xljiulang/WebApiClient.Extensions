@@ -13,13 +13,13 @@ PM> `install-package WebApiClient.Extensions.DependencyInjection`
 
 ```c#
 [HttpHost("https:/localhost:5000")]
-public interface INetApi : IHttpApi
+public interface IValuesApi : IHttpApi
 {
     [HttpGet("api/values")]
-    ITask<string[]> GetValuesAsync();
+    ITask<string[]> GetAsync();
 
     [HttpGet("api/values/{id}")]
-    ITask<string> GetValuesAsync(int id);
+    ITask<string> GetAsync(int id);
 }
 ```
 
@@ -29,7 +29,7 @@ public interface INetApi : IHttpApi
 // This method gets called by the runtime. Use this method to add services to the container.
 public void ConfigureServices(IServiceCollection services)
 {
-    services.AddHttpApi<INetApi>().ConfigureHttpApiConfig((c,p) =>
+    services.AddHttpApi<IValuesApi>().ConfigureHttpApiConfig((c,p) =>
     {
         c.HttpHost = new Uri("http://localhost:9999/");
         c.FormatOptions.DateTimeFormat = "yyyy-MM-dd HH:mm:ss.fff";
@@ -44,10 +44,10 @@ public void ConfigureServices(IServiceCollection services)
 ```c#
 public class HomeController : Controller
 {
-    public async Task<string> Index([FromServices]INetApi netApi, int id = 0)
+    public async Task<string> Index([FromServices]IValuesApi api, int id = 0)
     {
-        var values = await netApi.GetValuesAsync();
-        var value = await netApi.GetValuesAsync(id);
+        var values = await api.GetValuesAsync();
+        var value = await api.GetValuesAsync(id);
         return "ok";
     }
 }
@@ -64,13 +64,13 @@ PM> `install-package WebApiClient.Extensions.HttpClientFactory`
 
 ```c#
 [HttpHost("https:/localhost:5000")]
-public interface INetApi : IHttpApi
+public interface IValuesApi : IHttpApi
 {
     [HttpGet("api/values")]
-    ITask<string[]> GetValuesAsync();
+    ITask<string[]> GetAsync();
 
     [HttpGet("api/values/{id}")]
-    ITask<string> GetValuesAsync(int id);
+    ITask<string> GetAsync(int id);
 }
 ```
 
@@ -80,7 +80,7 @@ public interface INetApi : IHttpApi
 // This method gets called by the runtime. Use this method to add services to the container.
 public void ConfigureServices(IServiceCollection services)
 {   
-    services.AddHttpApiTypedClient<INetApi>((c, p) =>
+    services.AddHttpApiTypedClient<IValuesApi>((c, p) =>
     {
         c.HttpHost = new Uri("http://localhost:9999/");
         c.FormatOptions.DateTimeFormat = "yyyy-MM-dd HH:mm:ss.fff";
@@ -95,10 +95,10 @@ public void ConfigureServices(IServiceCollection services)
 ```c#
 public class HomeController : Controller
 {
-    public async Task<string> Index([FromServices]INetApi netApi, int id = 0)
+    public async Task<string> Index([FromServices]IValuesApi api, int id = 0)
     {
-        var values = await netApi.GetValuesAsync();
-        var value = await netApi.GetValuesAsync(id);
+        var values = await api.GetAsync();
+        var value = await api.GetAsync(id);
         return "ok";
     }
 }
@@ -113,14 +113,14 @@ PM> `install-package WebApiClient.Extensions.DiscoveryClient`
 > 声明微服务的WebApiClient调用接口
 
 ```c#
-[HttpHost("http://NET-API")]
-public interface INetApi : IHttpApi
+[HttpHost("http://VALUES")]
+public interface IValuesApi : IHttpApi
 {
     [HttpGet("api/values")]
-    ITask<string[]> GetValuesAsync();
+    ITask<string[]> GetAsync();
 
     [HttpGet("api/values/{id}")]
-    ITask<string> GetValuesAsync(int id);
+    ITask<string> GetAsync(int id);
 }
 ```
 
@@ -131,7 +131,7 @@ public interface INetApi : IHttpApi
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddDiscoveryClient(Configuration);
-    services.AddDiscoveryTypedClient<INetApi>((c, p) =>
+    services.AddDiscoveryTypedClient<IValuesApi>((c, p) =>
     {        
         c.FormatOptions.DateTimeFormat = "yyyy-MM-dd HH:mm:ss.fff";
         c.LoggerFactory = p.GetRequiredService<ILoggerFactory>();
@@ -153,10 +153,10 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 ```c#
 public class HomeController : Controller
 {
-    public async Task<string> Index([FromServices]INetApi netApi, int id = 0)
+    public async Task<string> Index([FromServices]IValuesApi api, int id = 0)
     {
-        var values = await netApi.GetValuesAsync();
-        var value = await netApi.GetValuesAsync(id);
+        var values = await api.GetAsync();
+        var value = await api.GetAsync(id);
         return "ok";
     }
 }
@@ -177,7 +177,7 @@ PM> `install-package WebApiClient.Extensions.MessagePack `
 public interface IUsersApi : IHttpApi
 {
     [HttpGet("api/users/{id}")]
-    ITask<UserInfo> GetValuesAsync(int id);
+    ITask<UserInfo> GetAsync(int id);
     
     [HttpPut("api/users")]
     ITask<bool> PutAsync([MessagePack] UserInfo value);
