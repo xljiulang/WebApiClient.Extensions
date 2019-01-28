@@ -27,18 +27,18 @@ namespace WebApiClient.Extensions.DiscoveryClient
         /// </summary>
         /// <typeparam name="TInterface">接口类型</typeparam>
         /// <param name="services"></param>
-        /// <param name="config">http接口的配置</param>
+        /// <param name="configOptions">配置选项</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
-        public static IHttpClientBuilder AddDiscoveryTypedClient<TInterface>(this IServiceCollection services, Action<HttpApiConfig> config)
+        public static IHttpClientBuilder AddDiscoveryTypedClient<TInterface>(this IServiceCollection services, Action<HttpApiConfig> configOptions)
             where TInterface : class, IHttpApi
         {
-            if (config == null)
+            if (configOptions == null)
             {
-                throw new ArgumentNullException(nameof(config));
+                throw new ArgumentNullException(nameof(configOptions));
             }
 
-            return services.AddDiscoveryTypedClient<TInterface>((c, p) => config.Invoke(c));
+            return services.AddDiscoveryTypedClient<TInterface>((c, p) => configOptions.Invoke(c));
         }
 
         /// <summary>
@@ -46,19 +46,19 @@ namespace WebApiClient.Extensions.DiscoveryClient
         /// </summary>
         /// <typeparam name="TInterface">接口类型</typeparam>
         /// <param name="services"></param>
-        /// <param name="config">http接口的配置</param>
+        /// <param name="configOptions">配置选项</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
-        public static IHttpClientBuilder AddDiscoveryTypedClient<TInterface>(this IServiceCollection services, Action<HttpApiConfig, IServiceProvider> config)
+        public static IHttpClientBuilder AddDiscoveryTypedClient<TInterface>(this IServiceCollection services, Action<HttpApiConfig, IServiceProvider> configOptions)
             where TInterface : class, IHttpApi
         {
-            if (config == null)
+            if (configOptions == null)
             {
-                throw new ArgumentNullException(nameof(config));
+                throw new ArgumentNullException(nameof(configOptions));
             }
 
             return services
-                .AddHttpApiTypedClient<TInterface>(config)
+                .AddHttpApiTypedClient<TInterface>(configOptions)
                 .ConfigurePrimaryHttpMessageHandler(provider =>
                 {
                     var discoveryClient = provider.GetService<IDiscoveryClient>();
