@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.2.5</Version>
+    <Version>2.0.0-beta2</Version>
     <Copyright>Copyright © xljiulang 2018</Copyright>
     <PackageReleaseNotes>WebApiClient.JIT的MessagePack扩展</PackageReleaseNotes>
     <Description>WebApiClient.JIT的MessagePack扩展</Description>
@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="MessagePack" Version="1.7.3.4" />
-    <PackageReference Include="WebApiClient.JIT" Version="0.2.5" />
+    <PackageReference Include="WebApiClient.JIT" Version="1.0.0-beta2" />
   </ItemGroup>
 
 </Project>

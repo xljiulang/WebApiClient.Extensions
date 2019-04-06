@@ -64,7 +64,7 @@ namespace WebApiClient.Extensions.HttpClientFactory
                         ServiceProvider = provider
                     };
                     configOptions.Invoke(httpApiConfig, provider);
-                    return HttpApiClient.Create<TInterface>(httpApiConfig);
+                    return HttpApi.Create<TInterface>(httpApiConfig);
                 });
         }
     }
