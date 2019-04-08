@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard1.3;net45</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.0-beta2</Version>
+    <Version>2.0.0</Version>
     <Copyright>Copyright © xljiulang 2018</Copyright>
     <PackageReleaseNotes>WebApiClient.JIT的Protobuf扩展</PackageReleaseNotes>
     <Description>WebApiClient.JIT的Protobuf扩展</Description>
@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="protobuf-net" Version="2.4.0.0" />
-    <PackageReference Include="WebApiClient.JIT" Version="1.0.0-beta2" />
+    <PackageReference Include="WebApiClient.JIT" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
