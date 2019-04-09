@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>2.0.0</Version>
+    <Copyright>Copyright © xljiulang 2019</Copyright>
+    <PackageReleaseNotes>WebApiClient.JIT的Autofac扩展</PackageReleaseNotes>
+    <Description>WebApiClient.JIT的Autofac扩展</Description>
+    <Authors>xljiulang</Authors>
+    <PackageProjectUrl>https://github.com/xljiulang/WebApiClient.Extensions</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/dotnetcore/WebApiClient/master/icon.png</PackageIconUrl>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.2" />
+    <PackageReference Include="WebApiClient.JIT" Version="1.0.0" />
+  </ItemGroup>
+
+</Project>
