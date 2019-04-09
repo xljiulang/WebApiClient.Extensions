@@ -9,13 +9,13 @@ namespace WebApiClient.Extensions.Autofac
     public static class AutofacExtensions
     {
         /// <summary>
-        /// 添加HttpApi
-        /// 返回HttpApi工厂
+        /// 注册HttpApi
+        /// 返回HttpApi工厂创建器
         /// </summary>
         /// <typeparam name="TInterface">接口类型</typeparam>
         /// <param name="builder"></param>
         /// <returns></returns>
-        public static HttpApiFactoryBuilder<TInterface> AddHttpApi<TInterface>(this ContainerBuilder builder)
+        public static HttpApiFactoryBuilder<TInterface> RegisterHttpApi<TInterface>(this ContainerBuilder builder)
             where TInterface : class, IHttpApi
         {
             return new HttpApiFactoryBuilder<TInterface>(builder);
