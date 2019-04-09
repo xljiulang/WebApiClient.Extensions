@@ -1,6 +1,37 @@
 # WebApiClient.Extensions
-[WebApiClient](https://github.com/dotnetcore/WebApiClient)项目的第三方扩展：[DependencyInjection](https://github.com/aspnet/DependencyInjection)、[HttpClientFactory](https://github.com/aspnet/HttpClientFactory)、[SteeltoeOSS.Discovery](https://github.com/SteeltoeOSS/Discovery)、[MessagePack](https://github.com/neuecc/MessagePack-CSharp)、[Protobuf](https://github.com/mgravell/protobuf-net)
+[WebApiClient](https://github.com/dotnetcore/WebApiClient)项目的第三方扩展：[Autofac](https://github.com/autofac/Autofac)、[DependencyInjection](https://github.com/aspnet/DependencyInjection)、[HttpClientFactory](https://github.com/aspnet/HttpClientFactory)、[SteeltoeOSS.Discovery](https://github.com/SteeltoeOSS/Discovery)、[MessagePack](https://github.com/neuecc/MessagePack-CSharp)、[Protobuf](https://github.com/mgravell/protobuf-net)
 
+
+
+### 0 Autofac扩展
+
+#### 0.1 Nuget
+PM> `install-package WebApiClient.Extensions.Autofac`
+<br/>支持 netstandard1.3
+
+#### 0.2 使用方法
+> 声明远程http服务的的WebApiClient调用接口
+
+```c#
+[HttpHost("https:/localhost:5000")]
+public interface IValuesApi : IHttpApi
+{
+    [HttpGet("api/values")]
+    ITask<string[]> GetAsync();
+
+    [HttpGet("api/values/{id}")]
+    ITask<string> GetAsync(int id);
+}
+```
+> 注册和配置接口
+```c#
+var builder = new ContainerBuilder();
+builder.RegisterHttpApi<IValuesApi>().ConfigureHttpApiConfig(c =>
+{
+    c.HttpHost = new Uri("http://localhost:9999/");
+    c.FormatOptions.DateTimeFormat = "yyyy-MM-dd HH:mm:ss.fff";
+});
+```
 
 ### 1 DependencyInjection扩展
 
