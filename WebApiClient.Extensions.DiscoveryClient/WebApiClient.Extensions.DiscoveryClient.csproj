@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.0</Version>
+    <Version>2.0.3</Version>
     <Description>WebApiClient.JIT的DiscoveryClient扩展</Description>
     <PackageReleaseNotes>WebApiClient.JIT的DiscoveryClient扩展</PackageReleaseNotes>
     <Copyright>Copyright © xljiulang 2018</Copyright>
