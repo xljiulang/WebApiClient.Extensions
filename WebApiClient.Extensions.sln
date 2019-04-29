@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiClient.Extensions.DiscoveryClient", "WebApiClient.Extensions.DiscoveryClient\WebApiClient.Extensions.DiscoveryClient.csproj", "{F7F3C8A2-5C15-4EB5-9265-0606671CD57C}"
 EndProject
@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiClient.Extensions.Mes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiClient.Extensions.Protobuf", "WebApiClient.Extensions.Protobuf\WebApiClient.Extensions.Protobuf.csproj", "{1CE7025C-E5E7-425E-B1E7-50679B07FA1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiClient.Extensions.Autofac", "WebApiClient.Extensions.Autofac\WebApiClient.Extensions.Autofac.csproj", "{29353B11-208B-4825-AC5B-C572830214E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiClient.Extensions.Autofac", "WebApiClient.Extensions.Autofac\WebApiClient.Extensions.Autofac.csproj", "{29353B11-208B-4825-AC5B-C572830214E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiClient.Extensions.JsonRpc", "WebApiClient.Extensions.JsonRpc\WebApiClient.Extensions.JsonRpc.csproj", "{839F1882-6E9E-4238-835C-10932246F9C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{29353B11-208B-4825-AC5B-C572830214E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29353B11-208B-4825-AC5B-C572830214E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29353B11-208B-4825-AC5B-C572830214E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{839F1882-6E9E-4238-835C-10932246F9C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{839F1882-6E9E-4238-835C-10932246F9C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{839F1882-6E9E-4238-835C-10932246F9C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{839F1882-6E9E-4238-835C-10932246F9C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
