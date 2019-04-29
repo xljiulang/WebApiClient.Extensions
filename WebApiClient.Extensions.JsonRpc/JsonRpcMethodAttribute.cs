@@ -33,6 +33,12 @@ namespace WebApiClient.Attributes
         public JsonRpcParamsStyle ParamsStyle { get; set; } = JsonRpcParamsStyle.Array;
 
         /// <summary>
+        /// 获取或设置提交的Content-Type
+        /// 默认为application/json-rpc 
+        /// </summary>
+        public string ContentType { get; set; } = JsonRpc.ContentType;
+
+        /// <summary>
         /// 获取或设置JsonRpc的路径
         /// 可以为空、相对路径或绝对路径
         /// </summary>
@@ -69,7 +75,7 @@ namespace WebApiClient.Attributes
         public override async Task BeforeRequestAsync(ApiActionContext context)
         {
             await this.postAttribute.BeforeRequestAsync(context);
-            context.RequestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(JsonRpc.ContentType));
+            context.RequestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(this.ContentType));
             context.Tags.Set(JsonRpc.ParamsTagName, new List<ApiParameterDescriptor>());
         }
 
@@ -98,7 +104,7 @@ namespace WebApiClient.Attributes
 
             var options = context.HttpApiConfig.FormatOptions;
             var json = context.HttpApiConfig.JsonFormatter.Serialize(jsonRpcRequest, options);
-            context.RequestMessage.Content = new StringContent(json, Encoding.UTF8, JsonRpc.ContentType);
+            context.RequestMessage.Content = new StringContent(json, Encoding.UTF8, this.ContentType);
 
             return JsonRpc.CompletedTask;
         }

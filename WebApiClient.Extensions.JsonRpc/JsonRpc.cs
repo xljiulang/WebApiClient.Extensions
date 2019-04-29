@@ -21,7 +21,7 @@ namespace WebApiClient
         /// <summary>
         /// 内容类型描述
         /// </summary>
-        public static readonly string ContentType = "application/json";
+        public static readonly string ContentType = "application/json-rpc";
 
 #if NET45
         /// <summary>
