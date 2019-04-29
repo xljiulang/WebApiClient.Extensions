@@ -1,5 +1,5 @@
 # WebApiClient.Extensions
-[WebApiClient](https://github.com/dotnetcore/WebApiClient)项目的第三方扩展：[Autofac](https://github.com/autofac/Autofac)、[DependencyInjection](https://github.com/aspnet/DependencyInjection)、[HttpClientFactory](https://github.com/aspnet/HttpClientFactory)、[SteeltoeOSS.Discovery](https://github.com/SteeltoeOSS/Discovery)、[MessagePack](https://github.com/neuecc/MessagePack-CSharp)、[Protobuf](https://github.com/mgravell/protobuf-net)
+[WebApiClient](https://github.com/dotnetcore/WebApiClient)项目的第三方扩展：[Autofac](https://github.com/autofac/Autofac)、[DependencyInjection](https://github.com/aspnet/DependencyInjection)、[HttpClientFactory](https://github.com/aspnet/HttpClientFactory)、[SteeltoeOSS.Discovery](https://github.com/SteeltoeOSS/Discovery)、[MessagePack](https://github.com/neuecc/MessagePack-CSharp)、[Protobuf](https://github.com/mgravell/protobuf-net)、[Json-Rpc](https://www.jsonrpc.org/specification)
 
 
 
@@ -355,3 +355,19 @@ class ProtobufOutputFormatter : OutputFormatter
 }
 ```
  
+### 6 Json-Rpc扩展
+#### 6.1 Nuget
+PM> `install-package WebApiClient.Extensions.JsonRpc`
+<br/>支持 netstandard1.3 / net4.5 
+
+#### 4.2 使用方法
+> 声明远程Rpc服务的的WebApiClient调用接口
+
+```c#
+[HttpHost("http://localhost:6800/jsonrpc")]
+public interface Aria2 : IHttpApi
+{
+    [JsonRpcMethod("aria2.addUri")]
+    ITask<JsonRpcResult<string>> AddUriAsync([RpcParam] params string[] uri);
+}
+```
