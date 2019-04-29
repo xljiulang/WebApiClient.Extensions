@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using WebApiClient.Contexts;
 
@@ -75,8 +71,8 @@ namespace WebApiClient.Attributes
         public override async Task BeforeRequestAsync(ApiActionContext context)
         {
             await this.postAttribute.BeforeRequestAsync(context);
-            context.RequestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(this.ContentType));
-            context.Tags.Set(JsonRpc.ParamsTagName, new List<ApiParameterDescriptor>());
+            context.RequestMessage.Content = new JsonRpcContent(context, this);
+            context.RequestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(this.ContentType ?? JsonRpc.ContentType));
         }
 
         /// <summary>
@@ -87,25 +83,6 @@ namespace WebApiClient.Attributes
         /// <returns></returns>
         Task IApiReturnAttribute.BeforeRequestAsync(ApiActionContext context)
         {
-            var parameterDescriptors = context.Tags
-                .Get(JsonRpc.ParamsTagName)
-                .As<List<ApiParameterDescriptor>>();
-
-            var parameters = this.ParamsStyle == JsonRpcParamsStyle.Array ?
-                (object)parameterDescriptors.Select(item => item.Value).ToList() :
-                (object)parameterDescriptors.ToDictionary(item => item.Name, item => item.Value);
-
-            var jsonRpcRequest = new JsonRpcRequest
-            {
-                Id = JsonRpc.NewId(),
-                Params = parameters,
-                Method = this.Method ?? context.ApiActionDescriptor.Name
-            };
-
-            var options = context.HttpApiConfig.FormatOptions;
-            var json = context.HttpApiConfig.JsonFormatter.Serialize(jsonRpcRequest, options);
-            context.RequestMessage.Content = new StringContent(json, Encoding.UTF8, this.ContentType);
-
             return JsonRpc.CompletedTask;
         }
 

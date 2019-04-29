@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebApiClient.Contexts;
 
@@ -19,14 +18,14 @@ namespace WebApiClient.Attributes
         /// <returns></returns>
         public Task BeforeRequestAsync(ApiActionContext context, ApiParameterDescriptor parameter)
         {
-            var parameterDescriptors = context.Tags.Get(JsonRpc.ParamsTagName).As<List<ApiParameterDescriptor>>();
-            if (parameterDescriptors == null)
+            var jsonRpcContent = context.RequestMessage.Content as JsonRpcContent;
+            if (jsonRpcContent == null)
             {
                 throw new HttpApiConfigException($"请为接口方法{context.ApiActionDescriptor.Name}修饰{nameof(JsonRpcMethodAttribute)}");
             }
             else
             {
-                parameterDescriptors.Add(parameter);
+                jsonRpcContent.AddParameter(parameter);
             }
             return JsonRpc.CompletedTask;
         }

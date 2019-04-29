@@ -14,11 +14,6 @@ namespace WebApiClient
         private static int @id = 0;
 
         /// <summary>
-        /// 附加数据中的tag名
-        /// </summary>
-        public static readonly string ParamsTagName = "$RpcParams";
-
-        /// <summary>
         /// 内容类型描述
         /// </summary>
         public static readonly string ContentType = "application/json-rpc";
