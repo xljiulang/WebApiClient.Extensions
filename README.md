@@ -48,16 +48,16 @@ builder.RegisterApiByType(typeof(IValuesApi),c =>
 > 使用Assembly注册和配置接口
 
 ```c#
-var assemblyArray = new Assembly[] { Assembly.GetExecutingAssembly() };
+var assembly = Assembly.GetExecutingAssembly();
 var builder = new ContainerBuilder();
-builder.RegisterApiByAssembly(assemblyArray,c =>
+builder.RegisterApiByAssembly(assembly,c =>
 {
     c.HttpHost = new Uri("http://localhost:9999/");
     c.FormatOptions.DateTimeFormat = "yyyy-MM-dd HH:mm:ss.fff";
 });
 ```
 
-通过反射扫描所有继承了IHttpApi的接口，把所有扫描到的接口注册到容器中
+通过反射扫描程序集中所有继承了IHttpApi的接口，把所有扫描到的接口注册到容器中
 ### 1 DependencyInjection扩展
 
 #### 1.1 Nuget
