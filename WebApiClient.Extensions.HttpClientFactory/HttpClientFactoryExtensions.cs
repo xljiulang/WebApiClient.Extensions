@@ -55,10 +55,9 @@ namespace WebApiClient.Extensions.HttpClientFactory
                 throw new ArgumentNullException(nameof(configOptions));
             }
 
-            var name = typeof(TInterface).ToString();
             return services
-                .AddHttpClient(name)
-                .AddTypedClient<TInterface>((httpClient, provider) =>
+                .AddHttpClient(typeof(TInterface).ToString())
+                .AddTypedClient((httpClient, provider) =>
                 {
                     var httpApiConfig = new HttpApiConfig(httpClient)
                     {
