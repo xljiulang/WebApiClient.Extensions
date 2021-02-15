@@ -23,7 +23,8 @@ public interface IValuesApi : IHttpApi
     ITask<string> GetAsync(int id);
 }
 ```
-> 注册和配置接口
+> 使用泛型注册和配置接口
+
 ```c#
 var builder = new ContainerBuilder();
 builder.RegisterHttpApi<IValuesApi>().ConfigureHttpApiConfig(c =>
@@ -33,6 +34,30 @@ builder.RegisterHttpApi<IValuesApi>().ConfigureHttpApiConfig(c =>
 });
 ```
 
+> 使用Type注册和配置接口
+
+```c#
+var builder = new ContainerBuilder();
+builder.RegisterApiByType(typeof(IValuesApi),c =>
+{
+    c.HttpHost = new Uri("http://localhost:9999/");
+    c.FormatOptions.DateTimeFormat = "yyyy-MM-dd HH:mm:ss.fff";
+});
+```
+注：type必须继承于IHttpApi
+> 使用Assembly注册和配置接口
+
+```c#
+var assembly = Assembly.GetExecutingAssembly();
+var builder = new ContainerBuilder();
+builder.RegisterApiByAssembly(assembly,c =>
+{
+    c.HttpHost = new Uri("http://localhost:9999/");
+    c.FormatOptions.DateTimeFormat = "yyyy-MM-dd HH:mm:ss.fff";
+});
+```
+
+通过反射扫描程序集中所有继承了IHttpApi的接口，把所有扫描到的接口注册到容器中
 ### 1 DependencyInjection扩展
 
 #### 1.1 Nuget
